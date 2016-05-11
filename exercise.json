@@ -1,0 +1,25 @@
+{
+    "E0001": {
+        "type": "excel",
+        "name": "Tabla, 5 cálculos y gráfico",
+        "description": "Un formato como tabla con cinco columnas a calcular y un gráfico",
+        "statement": "d:\\Proyectos\\sisgap\\exercises\\model_excel_001\\Enunciado (Excel).docx",
+        "solution": "d:\\Proyectos\\sisgap\\exercises\\model_excel_001\\DocExcel.xlsx",
+        "empty": "C:\\Windows\\ShellNew\\EXCEL12.XLSX",
+        "resources": [
+
+        ]
+    },
+    "W0001": {
+        "type": "word",
+        "name": "WordArt, Multinivel y Tabla",
+        "description": "Wordart en el título, un párrafo, una lista multinivel y una tabla",
+        "statement": "d:\\Proyectos\\sisgap\\exercises\\model_excel_001\\Enunciado (Excel).docx",
+        "solution": "d:\\Proyectos\\sisgap\\exercises\\model_excel_001\\DocExcel.xlsx",
+        "empty": "C:\\Windows\\ShellNew\\WORD12.DOCX",
+        "resources": [
+
+        ]
+    }
+
+}
