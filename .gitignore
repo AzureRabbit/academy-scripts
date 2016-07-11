@@ -90,3 +90,7 @@ ENV/
 
 # Creadentials
 client_secret.json
+
+# Sublime
+*.sublime-project
+*.sublime-workspace

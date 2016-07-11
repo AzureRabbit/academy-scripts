@@ -1,0 +1,21 @@
+# Things to do
+
+- [ ] mail and project issues links must be fixed
+    - https://github.com/sotogarcia/academy-scripts/issues
+    - mailto:sotogarcia@gmail.com
+- [ ] motivation block must be fixed:
+    - I need it to automate tasks
+
+## Sisgap
+
+- [ ] Google credentials and mail must be in a JSON file outside code
+    - The `calendar-python-sisgap.json` file stored in home folder could be used
+- [ ] Sisgap credentials must be stored in a JSON file outside code
+    - he `calendar-python-sisgap.json` file stored in home folder could be reused
+- [ ] Sisgap must have a command line parser
+- [ ] File `client_secret.json` must be removed from folder
+
+## Exercise
+
+- [ ] Exercise must be generalized
+- [ ] Exercise script should be a OOP application

@@ -20,6 +20,9 @@ from oauth2client import tools
 
 import uuid
 import pytz
+import json
+import shutil
+
 
 class Sisgap(object):
     """ Get resources from Sisgap
@@ -65,6 +68,13 @@ class Sisgap(object):
     )
 
     # --------------------------- ESTATIC METHODS -----------------------------
+
+    @staticmethod
+    def _date_handler(obj):
+        if hasattr(obj, 'isoformat'):
+            return obj.isoformat()
+        else:
+            raise obj
 
     @staticmethod
     def _get_monday(in_date=None, week_type=0):
@@ -146,18 +156,18 @@ class Sisgap(object):
     def __init__(self):
         self._referer = None
         self._cookie = None
-        self._user = 'user'
-        self._password = 'password'
-        self._headquarters = 'headquarters'
+        self._user = 'jsoto'
+        self._password = '32693935X'
+        self._headquarters = 'VIGOZA'
         self._htmlparser = etree.HTMLParser()
 
         # If modifying these scopes, delete your previously saved credentials
         # at ~/.credentials/calendar-python-quickstart.json
-        _google_scopes = 'https://www.googleapis.com/auth/calendar'
-        _google_client_secret_file = 'secret.json'
-        _google_application_name = 'Sisgap'
-        _google_mail_address = 'a@b.c'
-        
+        self._google_scopes = 'https://www.googleapis.com/auth/calendar'
+        self._google_client_secret_file = 'client_secret.json'
+        self._google_application_name = 'Sisgap'
+        self._google_mail_address = 'sotogarcia@gmail.com'
+
     # --------------------------- PRIVATE METHODS -----------------------------
 
     def _build_request(self, url, values=None):
@@ -217,6 +227,8 @@ class Sisgap(object):
         self._referer = url
 
         response = urllib2.urlopen(request)
+
+        print response.getcode() == 200
 
         return response
 
@@ -328,7 +340,7 @@ class Sisgap(object):
         for row in table.xpath('child::tr'):
             cells = [cell for cell in row.xpath('child::td')]
 
-            if index:
+            if index and len(row.xpath('child::td')) >=4:
                 group_name = self._get_full_tag_text(cells[0])
                 topic_name = self._get_full_tag_text(cells[1])
                 time_bounds = self._parse_time_html_cell(in_date, cells[2])
@@ -368,7 +380,7 @@ class Sisgap(object):
         # STEP 2: Opens new session and performs the log in
         self._open_session()
 
-        # STEP 3: Call private common _get_day_table method
+        # STEP 3: Call private common _get_day_timetable method
         items = self._parse_day_html_table(in_date)
 
         # STEP 4: Close session
@@ -397,7 +409,7 @@ class Sisgap(object):
 
     def get_next_group(self):
 
-        items = self.get_day_table()
+        items = self.get_day_timetable()
         items = sorted(items, key=lambda x: x['hora_inicio'], reverse=False)
         items = filter(lambda x: x['hora_inicio'] >= datetime.now(), items)
 
@@ -410,7 +422,7 @@ class Sisgap(object):
 
         in_date = in_date or date.today()
 
-        items = self.get_day_table(in_date)
+        items = self.get_day_timetable(in_date)
         items = sorted(items, key=lambda x: x['hora_inicio'], reverse=False)
 
         if group_id:
@@ -449,11 +461,13 @@ class Sisgap(object):
 
                 if index:
                     name = self._get_full_tag_text(cells[1])
-                    surname = self._get_full_tag_text(cells[2])
+                    firstname = self._get_full_tag_text(cells[2])
+                    lastname = self._get_full_tag_text(cells[3])
 
                     values = {
                         'name' : name.strip().capitalize(),
-                        'surname' : surname.strip().capitalize()
+                        'firstname' : firstname.strip().capitalize(),
+                        'lastname' : lastname.strip().capitalize()
                     }
 
                     items.append(values)
@@ -461,11 +475,21 @@ class Sisgap(object):
 
                 index = index + 1
 
-            text_file = open("d:\\proyectos\\sisgap\\output.html", "w")
-            text_file.write("Purchase Amount: %s" % etree.tostring(table))
-            text_file.close()
+            # text_file = open("d:\\proyectos\\sisgap\\output.html", "w")
+            # text_file.write("Purchase Amount: %s" % etree.tostring(table))
+            # text_file.close()
 
             return items
+
+    def create_folders(self, in_date=None, group_id=None):
+        students = self.get_student_list(in_date, group_id)
+
+        for student in students:
+            parts = (student['name'], student['firstname'], student['lastname'])
+            dir_name = u' '.join(parts)
+            if not os.path.exists(dir_name):
+                os.mkdir(dir_name)
+
 
     # ------------------------------- GOOGLE ----------------------------------
 
@@ -589,4 +613,86 @@ class Sisgap(object):
 from pprint import pprint
 
 sisgap = Sisgap()
-sisgap.google_sync()
+
+# pprint (sisgap.get_day_timetable(date.today() + timedelta(days=+0)) )
+
+sisgap.google_sync(date.today() + timedelta(days=5))
+
+# sisgap.create_folders(date.today() + timedelta(days=-0), group_id=919)
+
+# for group in sisgap.get_week_timetable():
+#     if not os.path.exists(group['grupo']):
+#         os.mkdir(group['grupo'])
+#         os.mkdir(os.path.join(group['grupo'], '~Recursos'))
+#         os.mkdir(os.path.join(group['grupo'], '~nfo'))
+#         with open(os.path.join(group['grupo'], '~nfo', 'data.json'), 'w') as fp:
+#             json.dump(group, fp, default=sisgap._date_handler)
+
+# pprint(sisgap.get_student_list(date.today() + timedelta(days=-1), 978))
+
+# for student in sisgap.get_student_list(date.today() + timedelta(days=+0), 852):
+#     full_name = ' '.join((
+#         student['name'],
+#         student['firstname'],
+#         student['lastname']
+#     ))
+#     if not os.path.exists(full_name):
+#         os.mkdir(full_name)
+
+
+# pprint(sisgap.get_week_timetable())
+
+def sync_folders():
+
+    # STEP 1: Get existing folder list
+    folders = os.listdir(u'.')
+
+    # STEP 2: Get student list
+    students = sisgap.get_student_list(date.today() + timedelta(days=0), group_id=913)
+
+    # STEP 3: Ensure resources folder and remove it from students folder list
+    resourcepath = os.path.abspath('~Recursos')
+    if not os.path.exists(resourcepath):
+        os.mkdir(resourcepath)
+    if '~Recursos' in folders:
+        folders.remove('~Recursos')
+
+    if '~nfo' in folders:
+        folders.remove('~nfo')
+
+    # STEP 4: Ensure unsuscribe folder and remove it from students folder list
+    unsubscribepath = os.path.abspath('~baja')
+    if not os.path.exists(unsubscribepath):
+        os.mkdir(unsubscribepath)
+    if '~baja' in folders:
+        folders.remove('~baja')
+
+    # STEP 5: Create folders for new students an restore those which have been
+    # suscribed again
+    for student in students:
+        parts = (student['name'], student['firstname'], student['lastname'])
+
+        dirname = u' '.join(parts)
+        abspath = os.path.abspath(dirname)
+
+        if dirname in folders:
+            print u'{} already exists'.format(dirname)
+            folders.remove(dirname)
+        else:
+            existpath = os.path.join(unsubscribepath, dirname)
+            if os.path.exists(existpath):
+                print u'Restoring previous unsubscribed folder {}'.format(dirname)
+                shutil.move(existpath, abspath)
+            else:
+                print u'Adding folder for new student {}'.format(dirname)
+                shutil.copytree(resourcepath, abspath)
+
+    # STEP 6: Remove folders from unsuscribed students
+    for folder in folders:
+        abspath = os.path.abspath(folder)
+        newpath = os.path.join(unsubscribepath, folder)
+
+        print u'Removing folder for unsubscribed student {}'.format(folder)
+        shutil.move(abspath, newpath)
+
+# sync_folders()

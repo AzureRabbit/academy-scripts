@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+    <!-- VIEWS: "Questions"
+
+        - Model·········: at.question
+        - _rec_name·····: name
+        - Domain········: []
+        - Context·······: {}
+        - Parent menu ··: academy_tests.menu_academy
+        - View priority·: 16    Sequence····: 10
+        - Action help···: There are not any question yet
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Tree view for "at.question" -->
+    <record id="view_at_question_tree" model="ir.ui.view">
+        <field name="name">view.at.question.tree</field>
+        <field name="model">at.question</field>
+        <field name="type">tree</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <tree string="at_question_tree" create="1" delete="1" edit="1">
+                <field name="name" class="oe_field_name" />
+           </tree>
+        </field>
+    </record>
+
+    <!-- Form view for "at.question" -->
+    <record id="view_at_question_form" model="ir.ui.view">
+        <field name="name">view.at.question.form</field>
+        <field name="model">at.question</field>
+        <field name="type">form</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <form string="at_question_form" create="1" delete="1" edit="1">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field name="name" class="oe_field_name"
+                                placeholder="Enter new text for question" />
+                        </h1>
+                    </div>
+
+                    <group col="4">
+                        <field name="at_topic_id" class="oe_field_at_topic_id" />
+                        <field name="at_level_id" class="oe_field_at_level_id"
+                            placeholder="Enter new value for level" />
+                        <field name="at_category_ids" class="oe_field_at_category_ids"
+                            widget="many2many_tags" colspan="4"
+                            attrs="{'readonly': [('at_topic_id', '=', False)]}" />
+                        <field name="at_tag_ids" class="oe_field_at_tag_ids"
+                            widget="many2many_tags"  colspan="4" />
+                    </group>
+
+                    <notebook>
+                        <page string="Answers" class="oe_page_answers" accesskey="A">
+                            <field name="at_answer_ids" class="oe_field_at_answer_ids"
+                                context="{'tree_view_ref' : 'academy_tests.view_at_answer_tree_x2many'}" />
+                        </page>
+                        <page string="Attachments" class="oe_page_attachments" accesskey="T">
+                            <field name="ir_attachment_ids" class="oe_field_ir_attachment_ids"
+                                context="{'tree_view_ref' : 'academy_tests.view_ir_attachment_tree'}" />
+                        </page>
+                        <page string="Description" class="oe_page_description" accesskey="D">
+                            <field name="description" class="oe_field_description"
+                                placeholder="Enter new text for description" />
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view for "at.question" -->
+    <record id="view_at_question_search" model="ir.ui.view">
+        <field name="name">view.at.question.search</field>
+        <field name="model">at.question</field>
+        <field name="type">search</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <search string="at_question_search">
+                <field name="name" string="Name" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Main window action for model.name -->
+    <record id="action_questions_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Questions</field>
+        <field name="res_model">at.question</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="target">current</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="view_at_question_search" />
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new question
+            </p>
+            <p>
+                Questions are the academy tests cornerstone.
+            </p>
+        </field>
+    </record>
+
+    <!-- Main menu for model.name -->
+    <record id="menu_questions" model="ir.ui.menu" >
+        <field name="name">Questions</field>
+        <field name="sequence" eval="10" />
+        <field name="action" ref="action_questions_act_window" />
+        <field name="parent_id" ref="academy_tests.menu_questions_top" />
+    </record>
+
+
+    </data>
+</openerp>

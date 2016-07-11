@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Relationship bettween tests and questions"
+
+            - Model·········: at.test.at.question.rel
+            - _rec_name·····: at_question_id
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: at.test.at.question.rel
+            - View priority·: 16    Sequence····: 10
+            - Action help···: Any question has beeen linked
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "at_test_at_question_rel" -->
+        <record id="view_at_test_at_question_rel_tree" model="ir.ui.view">
+            <field name="name">view.at_test_at_question_rel.tree</field>
+            <field name="model">at.test.at.question.rel</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="at_test_at_question_rel_tree" create="1" delete="1" edit="1" editable="bottom">
+                    <field name="sequence" widget="handle" />
+                    <field name="at_question_id" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "at_test_at_question_rel" -->
+        <record id="view_at_test_at_question_rel_form" model="ir.ui.view">
+            <field name="name">view.at_test_at_question_rel.form</field>
+            <field name="model">at.test.at.question.rel</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="at_test_at_question_rel_form" create="1" delete="1" edit="1">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="at_question_id" class="oe_edit_only" />
+                            <h1>
+                                <field name="at_question_id" class="oe_field_at_question_id"
+                                    placeholder="At question id" />
+                            </h1>
+                        </div>
+                        <!-- ··· -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "at_test_at_question_rel" -->
+        <record id="view_at_test_at_question_rel_search" model="ir.ui.view">
+            <field name="name">view.at_test_at_question_rel.search</field>
+            <field name="model">at.test.at.question.rel</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="at_test_at_question_rel_search">
+                    <field name="at_question_id" />
+                    <!-- ··· -->
+                </search>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+<!--         <record id="action_relationship_bettween_tests_and_questions_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Relationship bettween tests and questions</field>
+            <field name="res_model">at.test.at.question.rel</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_at_test_at_question_rel_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new Relationship bettween tests and questions
+                </p><p>
+                    Any question has beeen linked
+                </p>
+            </field>
+        </record> -->
+
+        <!-- Main menu for model.name -->
+<!--         <record id="menu_relationship_bettween_tests_and_questions" model="ir.ui.menu" >
+            <field name="name">Relationship bettween tests and questions</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_relationship_bettween_tests_and_questions_act_window" />
+            <field name="parent_id" ref="at.test.at.question.rel" />
+        </record> -->
+
+    </data>
+</openerp>

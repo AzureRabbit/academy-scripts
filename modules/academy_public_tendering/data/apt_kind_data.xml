@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="apt_kind_exam" model="apt.kind">
+            <field name="name">Open exam</field>
+        </record>
+
+        <record id="apt_kind_concourse" model="apt.kind">
+            <field name="name">Concourse</field>
+        </record>
+
+
+        <record id="apt_kind_concourse_exam" model="apt.kind">
+            <field name="name">Concourse/Exam</field>
+        </record>
+
+    </data>
+</openerp>

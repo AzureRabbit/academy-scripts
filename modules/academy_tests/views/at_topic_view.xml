@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Topics"
+
+            - Model·········: at.topic
+            - _rec_name·····: name
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: academy_tests.menu_questions_top
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not any record for name
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "at.topic" -->
+        <record id="view_at_topic_tree" model="ir.ui.view">
+            <field name="name">view.at.topic.tree</field>
+            <field name="model">at.topic</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="at_topic_tree" create="1" delete="1" edit="1">
+                    <field name="name" class="oe_field_name" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "at.topic" -->
+        <record id="view_at_topic_form" model="ir.ui.view">
+            <field name="name">view.at.topic.form</field>
+            <field name="model">at.topic</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="at_topic_form" create="1" delete="1" edit="1">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_field_name"
+                                    placeholder="Name" />
+                            </h1>
+                        </div>
+
+                        <group col="2">
+                            <field name="description" class="oe_field_description"
+                                placeholder="Enter new text for description" />
+                        </group>
+
+                        <notebook>
+                            <page string="Categories" class="oe_page_categories" accesskey="C">
+                                <field name="at_category_ids" class="oe_field_at_category_ids"
+                                    context="{'tree_view_ref': 'academy_tests.view_at_category_tree_x2many'}" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "at.topic" -->
+        <record id="view_at_topic_search" model="ir.ui.view">
+            <field name="name">view.at.topic.search</field>
+            <field name="model">at.topic</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="at_topic_search">
+                    <field name="name" />
+                </search>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+        <record id="action_topics_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Topics</field>
+            <field name="res_model">at.topic</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_at_topic_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There are not any topic defined.
+                </p>
+                <p>
+                    Topics are used to group questions, each one of them can
+                    be divided in categories.
+                </p>
+            </field>
+        </record>
+
+        <!-- Main menu for model.name -->
+        <record id="menu_topics" model="ir.ui.menu" >
+            <field name="name">Topics</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_topics_act_window" />
+            <field name="parent_id" ref="academy_tests.menu_questions_top" />
+        </record>
+
+    </data>
+</openerp>

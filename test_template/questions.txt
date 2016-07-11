@@ -1,0 +1,100 @@
+## PÁGINA
+
+¿Cuál es el valor establecido para el margen {% margin %}?
+¿Cuál es la posición del margen de encuadernación establecida para el documento?
+¿Cuál es la orientación de página aplicada al documento?
+¿Cuál es el tamaño de papel establecido para la impresión del documento?
+¿Cuál es el {% dimension %} correspondiente al papel {% paper %}?
+¿Cuál es margen establecido para el {% header_or_footer %} del documento?
+¿Cuál es la alineación vertical de página establecida para el documento?
+
+** varias páginas **
+** pares e impares diferentes **
+** primera página diferente **
+
+
+
+## FUENTE
+
+¿Cuál es el tipo de letra empleado en la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es el tamaño de letra aplicado a la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es el estilo de fuente aplicado a la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es el color de fuente aplicado a la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es el estilo de subrayado empleado en la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es el color de subrayado empleado en la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál de los siguientes efectos ha sido empleado en la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es la escala de caracter empleada en la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es el espaciado de caracter aplicado a la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es la posición de caracter aplicada a la {% n %} aparición del fragmento de texto {% text %}?
+
+## PÁRRAFO
+
+¿Cuál es la alineación aplicada al párrafo {% order %} del documento?
+¿Cuál es el nivel de esquema establecido para el párrafo {% order %} del documento?
+¿Cuál es el valor establecido para la sangría {% indentation %} del párrafo {% order %} del documento?
+¿Cuál es el valor establecido para el espaciado {% type %} del párrafo {% order %} del documento?
+¿Cuál es el interlineado aplicado al párrafo {% order %} del documento?
+
+* ¿Cuál es espaciado efectivo que hay entre los párrafos {% order1 %} y  {% order2 %} del documento?
+
+** control de viudas y huérfanas **
+** conservar con el siguiente ** 
+** conservar líneas juntas ** 
+** salto de página anterior ** 
+** suprimir números de línea ** 
+** no dividir con guiones ** 
+
+** ordenar párrafos **
+
+## TABULACIONES
+
+¿Cuál es la posición de la {% order1 %} tabulación existente en la línea {% order1 %}?
+¿Cuál es la alineción establecida pra la {% order1 %} tabulación existente en la línea {% order1 %}?
+¿Cuál es el relleno aplicado a la {% order1 %} tabulación existente en la línea {% order1 %}?
+* ¿Cuál es la distancia fijada para las tabulaciones predeterminadas en el documento?
+
+## BORDES Y SOMBREADO
+
+valor
+estilo
+color
+ancho
+distancia
+
+color de relleno
+estilo de trama
+color de trama
+
+** degradados **
+
+## ESTILOS
+
+¿Cuál es el estilo de caracter aplicado a la {% n %} aparición del fragmento de texto {% text %}?
+¿Cuál es el estilo de párrafo aplicado al párrafo {% order %} del documento?
+
+
+## NUMERACIÓN Y VIÑETAS
+
+¿Cuál es la distancia del margen al número {% number %} en la numeración del párrafo {% order %}? 
+¿Cuál es la distancia del margen al texto que sigue al número {% number %} en primera línea del párrafo {% order %}? 
+¿Cuál es la distancia del margen al texto de la segunda línea del párrafo numerado {% order %}? 
+¿Cuál es el caracter empleado en la viñeta del párrafo {% order %}? 
+¿Cuál es {% feature %} aplicada a la viñeta del párrafo {% order %}? 
+¿Cuál es la alineación establecida para la numeración del párrafo {% order %}? 
+¿Cuál es el valor de numeración establecido para la {% order %} numeración del documento?
+
+
+¿Cuál es la distancia del margen al número establecida para el nivel {% level %} en la lista multinivel? 
+¿Cuál es la distancia del margen al texto que sigue al número establecida para el nivel {% level %} en la lista multinivel? 
+¿Cuál es la distancia del margen al texto de la segunda línea de cada párrafo correspondiente al nivel {% level %} en la lista multinivel? 
+¿Cuál es el caracter empleado en la viñeta establecida para el nivel {% level %} en la lista multinivel? 
+¿Cuál es {% feature %} aplicada a la viñeta correspondiente al nivel {% level %} en la lista multinivel? 
+¿Cuál es la alineación establecida para la numeración correspondiente al nivel {% level %} en la lista multinivel? 
+
+** estilos asociados **
+** estilo legal **
+** incluir nivel desde **
+** reiniciar nivel **
+
+
+

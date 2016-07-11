@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="menu_test_top" model="ir.ui.menu" >
+            <field name="name">Test</field>
+            <field name="sequence" eval="10" />
+            <field name="parent_id" ref="academy_base.menu_academy" />
+        </record>
+
+        <record id="menu_questions_top" model="ir.ui.menu" >
+            <field name="name">Questions</field>
+            <field name="sequence" eval="10" />
+            <field name="parent_id" ref="academy_base.menu_academy" />
+        </record>
+
+        <record id="menu_settings_top" model="ir.ui.menu" >
+            <field name="name">Settings</field>
+            <field name="sequence" eval="10" />
+            <field name="parent_id" ref="academy_base.menu_academy" />
+        </record>
+
+        <record id="view_academy_tests_assets" model="ir.ui.view">
+            <field name="name">academy_tests assets</field>
+            <field name="model"></field>
+            <field name="type">qweb</field>
+            <field name="mode">extension</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="web.assets_backend" />
+            <field name="arch" type="xml">
+                <xpath expr="." position="inside">
+                    <link rel="stylesheet" href="/academy_tests/static/src/css/styles-backend.css" />
+                    <script type="text/javascript" src="/academy_tests/static/src/js/academy_tests.js" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
