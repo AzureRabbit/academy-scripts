@@ -5,11 +5,15 @@
 
 # --------------------------- REQUIRED LIBRARIES ------------------------------
 
+from collections import OrderedDict
+
 import argparse
 import datetime
 import os
 
 import sisgap_class
+import google_class
+
 import pprint
 import sys
 
@@ -37,6 +41,11 @@ class SisgapApp(object):
         self.lapse = None
         self._groupid = None
         self._jsonfile = None
+        self._gsync = None
+
+        self._user = None
+        self._password = None
+        self._headquarter = None
 
         self._sisgap = sisgap_class.Sisgap()
 
@@ -53,6 +62,18 @@ class SisgapApp(object):
         parser.add_argument('command', metavar='command', type=str,
                             choices=['timetable', 'students'],
                             help='command will be executed')
+
+        parser.add_argument('-u', '--user', type=str, dest='user',
+                            metavar='username', default='wrong!',
+                            help='username will be used to login on platform')
+
+        parser.add_argument('-p', '--pass', type=str, dest='password',
+                            metavar='password', default='wrong!',
+                            help='password will be used to login on platform')
+
+        parser.add_argument('-q', '--headq', type=str, dest='headquarter',
+                            metavar='headquarter', default='VIGOZA',
+                            help='headquarter to be accessed')
 
         parser.add_argument('-d', '--date', type=str, dest='datestr',
                             default=datetime.datetime.now().strftime(u'%d/%m/%Y'),
@@ -71,7 +92,8 @@ class SisgapApp(object):
                             metavar='file', default='python-sisgap.json',
                             help='json file which contains needed script configuration')
 
-        parser.add_argument('-s', '--sync', action='store_true', dest='gsync',
+        parser.add_argument('-s', '--sync', type=str, dest='gsync',
+                            metavar='email', default=None,
                             help='synchronizes timetable (with Google) or folders')
 
         args = parser.parse_args()
@@ -81,6 +103,11 @@ class SisgapApp(object):
         self._argparse_lapse(args.lapse)
         self._groupid = args.groupid
         self._jsonfile = os.path.abspath(args.jsonfile)
+        self._gsync = args.gsync
+
+        self._user = args.user
+        self._password = args.password
+        self._headquarter = args.headquarter
 
     def _argparse_date(self, datestr):
         """ Parses date sting given as command line argument and stores
@@ -174,16 +201,14 @@ class SisgapApp(object):
         """
 
         # STEP 1: Set default timetable, this will be an empty list
-        timetable = []
+        timetable = OrderedDict()
 
         # STEP 2: Opens Sisgap session
         self._sisgap.open_session()
 
         # STEP 4: Retrieves timetable for each day between given dates
         for single_date in self._daterange(start_date, end_date):
-            timetable.append({
-                single_date: self._sisgap.solic_pasar_lista(single_date)
-            })
+            timetable[single_date] = self._sisgap.solic_pasar_lista(single_date)
 
         # STEP 5: Closes Sisgap session
         self._sisgap.close_session()
@@ -265,21 +290,20 @@ class SisgapApp(object):
 
 
     def _print_timetable(self, timetable):
-        for daytt in timetable:
-            for datett, grouptt in daytt.iteritems():
-                if grouptt and len(grouptt):
-                    self._print_timetable_daily_header(datett)
-                    for group in grouptt:
-                        line = u'│ {:>3} │ {:<40} │ {:^5} │ {:^5} │ {:<20} │'.format(
-                            group['idGrupo'],
-                            group['grupo'],
-                            group['hora_inicio'].strftime('%H:%M'),
-                            group['hora_fin'].strftime('%H:%M'),
-                            group['materia']
-                        )
-                        print line
+        for datett, grouptt in timetable.iteritems():
+            if grouptt and len(grouptt):
+                self._print_timetable_daily_header(datett)
+                for group in grouptt:
+                    line = u'│ {:>3} │ {:<40} │ {:^5} │ {:^5} │ {:<20} │'.format(
+                        group['idGrupo'],
+                        group['grupo'],
+                        group['hora_inicio'].strftime('%H:%M'),
+                        group['hora_fin'].strftime('%H:%M'),
+                        group['materia']
+                    )
+                    print line
 
-                    self._draw_horizontal_line([6, 43, 8, 8, 23], 2)
+                self._draw_horizontal_line([6, 43, 8, 8, 23], 2)
 
     @staticmethod
     def _print_students(students):
@@ -297,8 +321,14 @@ class SisgapApp(object):
             print line
             index = index + 1
 
+    # ---------------------------- MAIN METHODS -------------------------------
+
     def _timetable_cmd(self):
         timetable = self._get_time_table(self.lapse[0], self.lapse[1])
+        if self._gsync:
+            gcalendar = google_class.GoogleCalendar(self._gsync)
+            gcalendar.google_sync(timetable)
+
         self._print_timetable(timetable)
 
     def _students_cmd(self):
@@ -319,6 +349,8 @@ class SisgapApp(object):
         # pprint.pprint(self._get_time_table(start_date, end_date))
 
         # pprint.pprint(self._get_student_list(907))
+
+        self._sisgap.set_credentials(self._user, self._password, self._headquarter)
 
         if self._command == 'timetable':
             self._timetable_cmd()

@@ -2,8 +2,10 @@
 # Author: Jorge Soto Garcia
 # Contact: sotogarcia@gmail.com
 
-"""Package to perform web scraping from Sisgap platform."""
+"""Package to build tests about documents."""
 
 __version__ = '0.0.1'
+
+
 
 

@@ -60,13 +60,27 @@ class Sisgap(object):
         ' like Gecko) Chrome/50.0.2661.94 Safari/537.36'
     )
 
-    def __init__(self):
+    def __init__(self, user=None, password=None, headquarters='VIGOZA'):
         self._referer = None
         self._cookie = None
-        self._user = 'jsoto'
-        self._password = '32693935X'
-        self._headquarters = 'VIGOZA'
+
+        self._user = user
+        self._password = password
+        self._headquarters = headquarters
+
         self._htmlparser = etree.HTMLParser()
+
+
+    def set_credentials(self, user=None, password=None, headquarters='VIGOZA'):
+        """ Change the credentials which will be used to access platform
+
+        @user (string): username allowed on Sisgap platform
+        @password (string): password allowed on Sisgap platform
+        @headquarters (string): training center will be consulted
+        """
+        self._user = user
+        self._password = password
+        self._headquarters = headquarters
 
     # --------------------------- PRIVATE METHODS -----------------------------
 

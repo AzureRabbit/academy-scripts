@@ -1,0 +1,402 @@
+<test>
+<question order="0">
+    <text>Cu l es la cadena de texto que se utiliza para designar el archivo prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>prueba</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>docx</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>Fichero</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="1">
+    <text>¨Cu l es la extension del archivo prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>docx</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>No tiene extensi¢n</text>
+            <is_right>False</is_right>
+        </answer>
+        <answer order="2">
+            <text>88.859 Bytes</text>
+            <is_right>False</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="2">
+    <text>¨Qu' tipo de archivo corresponde al documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>Documento de Word</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>Documento XML de Word</text>
+            <is_right>False</is_right>
+        </answer>
+        <answer order="2">
+            <text>Formato de texto enriquecido</text>
+            <is_right>False</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="3">
+    <text>¨Cu l es el t¡tulo del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>Decreto DOG Luns, 7 de marzo de 2016</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>prueba</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>El texto del primer p rrafo del documento</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="4">
+    <text>¨Qui'n figura como autor del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>Jorge Soto Garcia</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>Pilar Lopez Perez</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>Jose Luis Mendez Diaz</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="5">
+    <text>¨Qui'n figura como £ltimo autor del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>Jose Luis Mendez Diaz</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>Pilar Lopez Perez</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>Jaime Abilleira Moldes</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="6">
+    <text>¨Qui'n figura como administrador del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>Jose Luis Mendez Diaz</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>Pilar Lopez Perez</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>Jaime Abilleira Moldes</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="7">
+    <text>¨Qu' compa¤¡a aparece asociada en las propiedades del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>Academia Postal</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>Academia Postal 3</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>Postal</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="8">
+    <text>¨A partir de qu' plantilla ha sido creado el documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>Normal.dotx</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>Normal.dotm</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>Normal.dot</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="9">
+    <text>¨Cu l es el n£mero de revisi¢n del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>178</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>133</text>
+            <is_right>False</is_right>
+        </answer>
+        <answer order="2">
+            <text>125</text>
+            <is_right>False</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="10">
+    <text>¨En qu' fecha fue creado el documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>13/07/2016</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>30/06/2016</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>19/07/2016</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="11">
+    <text>¨Cu ndo se guard¢ por £ltima vez el documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>15/07/2016</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>03/07/2016</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>17/07/2016</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="12">
+    <text>¨Cu l ha sido el tiempo total de edici¢n del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>6</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>18</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>28</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="13">
+    <text>¨Cu l es el n£mero total de p ginas del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>3</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>2</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>4</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="14">
+    <text>¨Cu l es el n£mero total de palabras del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>3836</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>999</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>3854</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="15">
+    <text>¨Cu l es el n£mero total de caracteres, sin contar espacios, del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>20847</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>999</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>20906</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="16">
+    <text>¨Cu l es el n£mero total de l¡neas existentes en el documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>720</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>999</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>781</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="17">
+    <text>¨Cu l es el n£mero total de p rrafos existentes en el documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>252</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>999</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>270</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+<question order="18">
+    <text>¨Cu l es, en bytes, el tama¤o del documento prueba.docx?</text>
+    <answers>
+        <answer order="0">
+            <text>252</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="1">
+            <text>999</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="2">
+            <text>88900</text>
+            <is_right>True</is_right>
+        </answer>
+        <answer order="3">
+            <text>Ninguna de las anteriores es correcta.</text>
+            <is_right>False</is_right>
+        </answer>
+    </answers>
+</question>
+
+</test>

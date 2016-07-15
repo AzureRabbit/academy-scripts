@@ -94,3 +94,5 @@ client_secret.json
 # Sublime
 *.sublime-project
 *.sublime-workspace
+
+__old__
