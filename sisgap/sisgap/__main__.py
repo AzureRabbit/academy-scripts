@@ -16,6 +16,11 @@ import google_class
 
 import pprint
 import sys
+import shutil
+
+import ctypes
+FILE_ATTRIBUTE_HIDDEN = 0x02
+FILE_ATTRIBUTE_SYSTEM = 0x04
 
 # -------------------------- MAIN SCRIPT BEHAVIOR -----------------------------
 
@@ -321,6 +326,114 @@ class SisgapApp(object):
             print line
             index = index + 1
 
+    @staticmethod
+    def _ensure_folder(flist, folder, base_path=None, force=True):
+        """ Ensures given folder name exists in path,
+            - if exist with some other case it will be renamed
+            - if not exists it will be created
+            Once folder has been ensured, this method returns a list with
+        all other folders.
+
+        @param flist: existing folders in path
+        @param folder: folder to check
+        @param base_path: base path
+        @param foce (boolean): make new folder if True
+
+        @return: list with all other folder names
+        """
+
+        # STEP 1: Check if folder exists (ignorecase)
+        existing = [fn for fn in flist if fn.upper() == folder.upper()]
+
+        # STEP 2: Create or rename folder if not mathes with any
+        if folder not in existing:
+            if len(existing) > 0:
+                src_path = os.path.join(base_path, existing[0])
+                dest_path = os.path.join(base_path, folder)
+                shutil.move(src_path, dest_path)
+            elif force == True:
+                path = os.path.join(base_path, folder)
+                os.mkdir(path)
+
+        # STEP 3: Returns list witout ensured folder
+        return [fn for fn in flist if fn not in existing]
+
+    def _restore_folder(self, base_path, unsubscribed, folder, force=True):
+        """ Restore unsubscribed folder or create new if force is set to true
+
+        @param base_path: base path
+        @unsubscribed_folders = list of unsubscribed folders
+        @param folder: name of the folder to restore
+        @param foce (boolean): make new folder from ~Recursos if True
+        """
+
+        # STEP 1: Ensure folder name case
+        self._ensure_folder(unsubscribed, folder, base_path, False)
+
+        # STEP 2: Check if folder exists
+        dest_path = os.path.join(base_path, folder)
+        if not os.path.exists(dest_path):
+
+            # STEP 3: Ensure unsuscribe folder name case
+            unsubscribed_path = os.path.join(base_path, u'~Baja', folder)
+
+            # STEP 4: Restores or create folder
+            if os.path.exists(unsubscribed_path):
+                shutil.move(unsubscribed_path, dest_path)
+            elif force == True:
+                resource_path = os.path.join(base_path, u'~Recursos')
+                shutil.copytree(resource_path, dest_path)
+
+
+    @staticmethod
+    def _hide_folder(abspath):
+        """ Set +H +S file attributes
+        @param abs_path: base path
+        """
+        # STEP 1: adds the +H attribute
+        ctypes.windll.kernel32.SetFileAttributesW(abspath, FILE_ATTRIBUTE_HIDDEN)
+
+        # STEP 2: adds the +S attribute
+        ctypes.windll.kernel32.SetFileAttributesW(abspath, FILE_ATTRIBUTE_SYSTEM)
+
+    def sync_folders(self, students, path):
+        """ Create folders for all students
+        """
+
+        # STEP 1: Get existing folder list
+        folders = os.listdir(path)
+
+        # STEP 2: Ensure ~Recursos and ~Baja folders
+        folders = self._ensure_folder(folders, u'~Recursos', path)
+        folders = self._ensure_folder(folders, u'~Baja', path)
+
+        # STEP 3: Builds full paths for ~Recursos and ~Baja folders
+        unsubscribepath = os.path.join(path, u'~Baja')
+
+        # STEP 4: Ensure ~Baja folder has been hidden
+        self._hide_folder(unsubscribepath)
+
+        # STEP 5: Gel all ususcribed folders
+        unsubscribed_folders = folders = os.listdir(unsubscribepath)
+
+        for student in students:
+
+            # STEP 5: Build the folder name
+            parts = (student['name'], student['firstname'], student['lastname'])
+            dirname = u' '.join(parts)
+
+            # STEP 6: Restores or creates folder
+            self._restore_folder(path, unsubscribed_folders, dirname)
+
+        # STEP 7: Remove folders from unsuscribed students
+        for folder in folders:
+            abspath = os.path.abspath(folder)
+            newpath = os.path.join(unsubscribepath, folder)
+
+            print u'Removing folder for unsubscribed student {}'.format(folder)
+            shutil.move(abspath, newpath)
+
+
     # ---------------------------- MAIN METHODS -------------------------------
 
     def _timetable_cmd(self):
@@ -333,6 +446,9 @@ class SisgapApp(object):
 
     def _students_cmd(self):
         students = self._get_student_list(self._groupid)
+        if self._gsync:
+            self.sync_folders(students, self._gsync)
+
         self._print_students(students)
 
     def run(self):

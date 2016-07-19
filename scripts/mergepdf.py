@@ -93,6 +93,7 @@ class App(object):
             merger = PdfFileMerger()
 
             for fname in self.files:
+                print fname
                 fpath = os.path.abspath(fname)
                 ffile = PdfFileReader(open(fpath, 'rb'))
                 merger.append(ffile)

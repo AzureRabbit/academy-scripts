@@ -23,6 +23,8 @@ class DocDriver(Driver):
         self._doc.Close()
         self._word.Quit()
 
+    # -------------------------- AUXILIARY METHODS ----------------------------
+
     def _get_builtindocumentproperty(self, name, default=None):
         """ Try to get a BuiltInDocumentProperty from document and convert its
         value to an string.
@@ -39,6 +41,48 @@ class DocDriver(Driver):
 
         return value
 
+    def _get_pagesetup(self, name, default=None):
+        """ Try to get a BuiltInDocumentProperty from document and convert its
+        value to an string.
+        """
+
+        value = None
+
+        try:
+            prop = self._doc.PageSetup[name]
+            value = str(prop)
+            value = value if value and value != 'None' else default
+        except Exception as ex:
+            print name, ex
+
+        return value
+
+    # --------------------------- STATIC METHODS ------------------------------
+
+    @staticmethod
+    def get_allowed_types():
+        return {
+            u'doc': u'Documento de Word 97-2003',
+            u'docm': u'Documento habilitado con macros de Word',
+            u'docx': u'Documento de Word',
+            u'dot': u'Plantilla de Word 97-2003',
+            u'dotm': u'Plantilla habilitada con macros de Word',
+            u'dotx': u'Plantilla de Word',
+            u'mht': u'Página web de un solo archivo',
+            u'html': u'Página web',
+            u'mhtml': u'Página web de un solo archivo',
+            u'odt': u'Texto de OpenDocument',
+            u'pdf': u'PDF',
+            u'rtf': u'Formato de texto enriquecido',
+            u'txt': u'Texto sin formato',
+            u'wps': u'Documento de Works 6-9',
+            u'xml': u'Documento XML de Word',
+            u'xps': u'Documento XPS',
+            u'dic': u'Corrector ortográfico personalizado',
+            u'thmx': u'Tema de Office'
+        }
+
+    # ------------------------ FILE AND PATH METHODS --------------------------
 
     def get_type(self):
         """ Gets the document type
@@ -61,7 +105,7 @@ class DocDriver(Driver):
     def get_last_author(self):
         """ Gets the document last_author propperty
         """
-        return self._get_builtindocumentproperty('Manager')
+        return self._get_builtindocumentproperty('Last author')
 
     def get_manager(self):
         """ Gets the document manager propperty
@@ -153,33 +197,67 @@ class DocDriver(Driver):
         """
         return self._get_builtindocumentproperty('Number of bytes')
 
-
     def get_hyperlink_base(self):
         """ Gets the document hyperlink_base propperty
         """
         return self._get_builtindocumentproperty('Hyperlink base')
 
-    # --------------------------- STATIC METHODS ------------------------------
+    # --------------------------- PAGE PROPERTIES -----------------------------
 
-    @staticmethod
-    def get_allowed_types():
-        return {
-            u'doc': u'Documento de Word 97-2003',
-            u'docm': u'Documento habilitado con macros de Word',
-            u'docx': u'Documento de Word',
-            u'dot': u'Plantilla de Word 97-2003',
-            u'dotm': u'Plantilla habilitada con macros de Word',
-            u'dotx': u'Plantilla de Word',
-            u'mht': u'Página web de un solo archivo',
-            u'html': u'Página web',
-            u'mhtml': u'Página web de un solo archivo',
-            u'odt': u'Texto de OpenDocument',
-            u'pdf': u'PDF',
-            u'rtf': u'Formato de texto enriquecido',
-            u'txt': u'Texto sin formato',
-            u'wps': u'Documento de Works 6-9',
-            u'xml': u'Documento XML de Word',
-            u'xps': u'Documento XPS',
-            u'dic': u'Corrector ortográfico personalizado',
-            u'thmx': u'Tema de Office'
-        }
+    def get_page_margins(self):
+        """ Get values for document margins
+
+        @param extra (boolean): if True gutter, header and footer already will
+        be returned.
+        """
+        return dict(
+            top=self._get_pagesetup(u'TopMargin'),
+            right=self._get_pagesetup(u'RightMargin'),
+            bottom=self._get_pagesetup(u'BottomMargin'),
+            left=self._get_pagesetup(u'LeftMargin'),
+        )
+
+    def get_gutter_margin(self):
+        """ Gets gutter margins
+        """
+        return dict(
+            distance=self._get_pagesetup(u'Gutter'), # Only Word
+            position=self._get_pagesetup(u'GutterPos') # Only Word
+        )
+
+    def get_header_margins(self):
+        """ Gets header margins
+        """
+        return dict(
+            distance=self._get_pagesetup(u'FooterDistance'),
+            height=None, # Only Writer
+            different=self._get_pagesetup(u'DifferentFirstPageHeaderFooter')
+        )
+
+    def get_footer_margins(self):
+        """ Gets footer margins
+        """
+        return dict(
+            distance=self._get_pagesetup(u'FooterDistance'),
+            height=None, # Only Writer,
+            different=self._get_pagesetup(u'DifferentFirstPageHeaderFooter')
+        )
+
+    def get_page_orientation(self):
+        """ Gets page alignment
+        """
+        return self._get_pagesetup(u'Orientation'),
+
+    def get_page_align(self):
+        """ Gets page alignment
+        """
+        return self._get_pagesetup(u'VerticalAlignment'),
+
+    def get_page_size(self):
+        """ Gets page size
+        """
+        return dict(
+            height=self._get_pagesetup(u'PageHeight'),
+            width=self._get_pagesetup(u'PageWidth'),
+            paper=self._get_pagesetup(u'PaperSize'),
+        )
