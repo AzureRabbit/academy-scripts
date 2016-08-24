@@ -390,7 +390,7 @@ class Sisgap(object):
         # STEP 2: Build a dictionary to be used as response POST arguments
         values = {
             'tipo' : groupinfo['tipo'],
-            'fecha' : self._one_digit_date(groupinfo['fecha']),
+            'fecha' : groupinfo['fecha'].strftime('%m/%d/%Y'),
             'idMateria' : groupinfo['idMateria'],
             'idGrupo' : groupinfo['idGrupo'],
             'hora_inicio' : groupinfo['hora_inicio'].strftime('%H:%M'),

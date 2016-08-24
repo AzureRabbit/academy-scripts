@@ -17,6 +17,8 @@ import google_class
 import pprint
 import sys
 import shutil
+import re
+import colorama
 
 import ctypes
 FILE_ATTRIBUTE_HIDDEN = 0x02
@@ -53,6 +55,8 @@ class SisgapApp(object):
         self._headquarter = None
 
         self._sisgap = sisgap_class.Sisgap()
+
+        self._codepage = sys.stdout.encoding
 
     # --------------------------- ARGUMENT PARSE ------------------------------
 
@@ -215,10 +219,16 @@ class SisgapApp(object):
         for single_date in self._daterange(start_date, end_date):
             timetable[single_date] = self._sisgap.solic_pasar_lista(single_date)
 
-        # STEP 5: Closes Sisgap session
+            for item in timetable[single_date]:
+                item['grupo'] = re.sub(
+                    r'^INFORM.TICA *', u'', item['grupo'], 0, re.IGNORECASE)
+                item['materia'] = re.sub(
+                    r'^INFORM.TICA *', u'', item['materia'], 0, re.IGNORECASE)
+
+        # STEP 6: Closes Sisgap session
         self._sisgap.close_session()
 
-        # STEP 6: Returns the timetable
+        # STEP 7: Returns the timetable
         return timetable
 
     def _get_student_list(self, group_id):
@@ -283,15 +293,15 @@ class SisgapApp(object):
         """
 
         title = datetime.datetime.strftime(_in_date, u'%A').upper()
-        title = title + datetime.datetime.strftime(_in_date, u' (%d-%m-%Y)')
+        title = title + datetime.datetime.strftime(_in_date, u' [%d/%m/%Y]')
         print '\n{0:^90s}'.format(title)
 
-        self._draw_horizontal_line([6, 43, 8, 8, 23], 0)
+        self._draw_horizontal_line([6, 43, 8, 8, 15], 0)
 
-        print( u'│ {:>3} │ {:<40} │ {:^5} │ {:^5} │ {:<20} │'.format(
+        print( u'│ {:>3} │ {:<40} │ {:^5} │ {:^5} │ {:<12} │'.format(
             'ID', 'GROUP', 'START', 'END', 'SUBJECT'))
 
-        self._draw_horizontal_line([6, 43, 8, 8, 23], 1)
+        self._draw_horizontal_line([6, 43, 8, 8, 15], 1)
 
 
     def _print_timetable(self, timetable):
@@ -299,16 +309,21 @@ class SisgapApp(object):
             if grouptt and len(grouptt):
                 self._print_timetable_daily_header(datett)
                 for group in grouptt:
-                    line = u'│ {:>3} │ {:<40} │ {:^5} │ {:^5} │ {:<20} │'.format(
+                    line = u'│ {:>3} │ {:<40} │ {:^5} │ {:^5} │ {:<12} │'.format(
                         group['idGrupo'],
                         group['grupo'],
                         group['hora_inicio'].strftime('%H:%M'),
                         group['hora_fin'].strftime('%H:%M'),
                         group['materia']
                     )
-                    print line
 
-                self._draw_horizontal_line([6, 43, 8, 8, 23], 2)
+                    if bool(re.match(r'Te.r.c?a', group['materia'], re.IGNORECASE)):
+                        print colorama.Fore.YELLOW + line, colorama.Style.RESET_ALL
+                    else:
+                        print line
+
+
+                self._draw_horizontal_line([6, 43, 8, 8, 15], 2)
 
     @staticmethod
     def _print_students(students):
@@ -396,12 +411,20 @@ class SisgapApp(object):
         # STEP 2: adds the +S attribute
         ctypes.windll.kernel32.SetFileAttributesW(abspath, FILE_ATTRIBUTE_SYSTEM)
 
+    def _list_folders(self, path):
+        """ Return an unicode list with all directories in path
+        """
+        folders = os.listdir(path) or []
+        if folders and len(folders) and isinstance(folders[0], str):
+            folders = [unicode(n, self._codepage, 'replace') for n in folders]
+        return [d for d in folders if os.path.isdir(os.path.join(path, d))]
+
     def sync_folders(self, students, path):
         """ Create folders for all students
         """
 
         # STEP 1: Get existing folder list
-        folders = os.listdir(path)
+        folders = self._list_folders(path)
 
         # STEP 2: Ensure ~Recursos and ~Baja folders
         folders = self._ensure_folder(folders, u'~Recursos', path)
@@ -414,13 +437,13 @@ class SisgapApp(object):
         self._hide_folder(unsubscribepath)
 
         # STEP 5: Gel all ususcribed folders
-        unsubscribed_folders = folders = os.listdir(unsubscribepath)
+        unsubscribed_folders = self._list_folders(unsubscribepath)
 
         for student in students:
 
             # STEP 5: Build the folder name
             parts = (student['name'], student['firstname'], student['lastname'])
-            dirname = u' '.join(parts)
+            dirname = u' '.join(parts) # .encode(self._codepage, 'replace')
 
             # STEP 6: Restores or creates folder
             self._restore_folder(path, unsubscribed_folders, dirname)
@@ -456,6 +479,7 @@ class SisgapApp(object):
         start the application.
         """
 
+        colorama.init()
 
         self._argparse()
         self._print_values()

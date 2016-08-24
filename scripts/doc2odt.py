@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #pylint: disable=I0011,W0703,R0903
-""" Allows you to convert a Microsoft Excel XLS format to XLSX document
+""" Allows you to convert a Microsoft Word DOCX format to OpenDocument Text
 """
 
 # --------------------------- REQUIRED LIBRARIES ------------------------------
@@ -40,11 +40,11 @@ class App(object):
         arguments.
         """
 
-        description = u'Convert a Microsoft Excel XLX format to XLSX document.'
+        description = u'Convert a Microsoft Word DOCX format to a OpenDocument Text.'
 
         parser = argparse.ArgumentParser(description)
-        parser.add_argument(u'file', metavar=u'file', type=str,
-                            help=u'path of the .xls file will be converted')
+        parser.add_argument('file', metavar='file', type=str,
+                            help='path of the .docx file will be converted')
 
         args = parser.parse_args()
 
@@ -53,26 +53,26 @@ class App(object):
         self.dirname = os.path.dirname(self.abspath)
         self.filename = self.basename and os.path.splitext(self.basename)[0]
 
-    def _xls2xlsx(self):
-        """ Performs the conversion from xls to xlsx
+    def _docx2odt(self):
+        """ Performs the conversion from docx to odt
         """
 
-        new_path = os.path.join(self.dirname, self.filename+'.xlsx')
+        new_path = os.path.join(self.dirname, self.filename+'.odt')
 
         try:
 
-            excel_app = win32com.client.gencache.EnsureDispatch(u'Excel.Application')
-            workbook = excel_app.Workbooks.Open(self.abspath)
+            word = win32com.client.DispatchEx("Word.Application")
+            doc = word.Documents.Open(self.abspath)
+            doc.SaveAs(new_path, FileFormat=23)
 
-            workbook.SaveAs(new_path, FileFormat=51)
-
-            workbook.Close()
-            excel_app.Application.Quit()
+            doc.Close()
+            word.Quit()
 
         except Exception as ex:
             print ex
         else:
-            print u'New file %s has been written.' % new_path
+            str_new_path = new_path.decode('utf-8', 'ignore')
+            print u'New file %s has been written.' % str_new_path
 
     def _is_file(self):
         """ Check if given path is a valid file path
@@ -86,7 +86,7 @@ class App(object):
 
         self._argparse()
         if self._is_file():
-            self._xls2xlsx()
+            self._docx2odt()
 
 
 # --------------------------- SCRIPT ENTRY POINT ------------------------------
